@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Spend - U.R. Assistant</title>
+    <link rel="stylesheet" href="ur-assistant.css">
+    <script src="../../common/auth.js"></script>
+    <script src="../data-manager.js"></script>
+    <script src="../ui-utils.js"></script>
+    <script>checkAuth();</script>
+</head>
+<body>
+    <!-- Fixed Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../../../main/unnamed.jpg" alt="Smart Spend Logo" class="logo">
+                <h1>Smart Spend - U.R. Assistant</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../dashboard/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="../add-transaction/add-transaction.html" class="nav-link">Add Transaction</a></li>
+                <li><a href="../all-transactions/all-transactions.html" class="nav-link">Transactions</a></li>
+                <li><a href="../analytics/analytics.html" class="nav-link">Analytics</a></li>
+                <li><a href="#" class="nav-link active">Assistant</a></li>
+                <li><a href="../settings/settings.html" class="nav-link">Settings</a></li>
+                <li><a href="../../../landing/start/landing.html" class="nav-link logout-btn">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">U.R. Assistant</h1>
+                <p class="page-subtitle">Your Ultimate Reasoning Financial Assistant - Powered by AI</p>
+            </div>
+
+            <div class="assistant-layout">
+                <!-- Chat Container -->
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="assistant-info">
+                            <div class="assistant-avatar">🤖</div>
+                            <div class="assistant-details">
+                                <h3>U.R. Assistant</h3>
+                                <p class="status">Online • Ready to help</p>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="action-btn" onclick="clearChat()" title="Clear Chat">🗑️</button>
+                            <button class="action-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Welcome Message -->
+                        <div class="message assistant-message">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                <div class="message-text">
+                                    Hello! I'm your U.R. (Ultimate Reasoning) Assistant. I can help you with:
+                                    <ul>
+                                        <li>💰 Budget planning and advice</li>
+                                        <li>📊 Spending analysis and insights</li>
+                                        <li>🎯 Financial goal setting</li>
+                                        <li>💡 Money-saving tips</li>
+                                        <li>📈 Investment guidance</li>
+                                        <li>🔍 Expense categorization help</li>
+                                    </ul>
+                                    How can I assist you today?
+                                </div>
+                                <div class="message-time">Just now</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <div class="quick-actions">
+                            <button class="quick-action-btn" onclick="sendQuickMessage('How can I save more money?')">
+                                💰 Save Money
+                            </button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('Analyze my spending pattern')">
+                                📊 Analyze Spending
+                            </button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('Help me create a budget')">
+                                📋 Create Budget
+                            </button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('Investment advice for beginners')">
+                                📈 Investment Tips
+                            </button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <textarea id="messageInput" placeholder="Ask me anything about your finances..." rows="1"></textarea>
+                            <button class="send-btn" onclick="sendMessage()" id="sendBtn">
+                                <span class="send-icon">📤</span>
+                            </button>
+                        </div>
+                        
+                        <div class="input-footer">
+                            <span class="character-count">0 / 500</span>
+                            <span class="tip">💡 Press Enter to send, Shift+Enter for new line</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="assistant-sidebar">
+                    <!-- Quick Stats -->
+                    <div class="sidebar-card">
+                        <h3>📊 Your Financial Overview</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Monthly Spending</span>
+                            <span class="stat-value">₹45,230</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Budget Used</span>
+                            <span class="stat-value">90%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Savings Rate</span>
+                            <span class="stat-value">15%</span>
+                        </div>
+                    </div>
+
+                    <!-- Recent Insights -->
+                    <div class="sidebar-card">
+                        <h3>💡 Recent Insights</h3>
+                        <div class="insight-item">
+                            <div class="insight-icon">🍔</div>
+                            <div class="insight-text">
+                                <strong>Food expenses up 25%</strong> this month
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🚗</div>
+                            <div class="insight-text">
+                                <strong>Great job!</strong> Transport costs down 15%
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">💡</div>
+                            <div class="insight-text">
+                                <strong>Tip:</strong> Consider meal planning to save money
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggested Actions -->
+                    <div class="sidebar-card">
+                        <h3>🎯 Suggested Actions</h3>
+                        <div class="action-item">
+                            <button class="action-link" onclick="sendQuickMessage('Review my food budget')">
+                                📊 Review Food Budget
+                            </button>
+                        </div>
+                        <div class="action-item">
+                            <button class="action-link" onclick="sendQuickMessage('Set up savings goals')">
+                                🎯 Set Savings Goals
+                            </button>
+                        </div>
+                        <div class="action-item">
+                            <button class="action-link" onclick="sendQuickMessage('Find ways to cut expenses')">
+                                ✂️ Cut Expenses
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Learning Resources -->
+                    <div class="sidebar-card">
+                        <h3>📚 Learning Resources</h3>
+                        <div class="resource-item">
+                            <a href="#" class="resource-link">
+                                📖 Budgeting 101 Guide
+                            </a>
+                        </div>
+                        <div class="resource-item">
+                            <a href="#" class="resource-link">
+                                🎥 Investment Basics Video
+                            </a>
+                        </div>
+                        <div class="resource-item">
+                            <a href="#" class="resource-link">
+                                📝 Savings Planner Template
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../common/auth.js"></script>
+    <script src="../data-manager.js"></script>
+    <script src="../ui-utils.js"></script>
+    <script src="ur-assistant-main.js"></script>
+</body>
+</html>

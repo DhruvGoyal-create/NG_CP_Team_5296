@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Assistant - Smart Spend</title>
+    <link rel="stylesheet" href="support-assistant.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="support-assistant-container">
+        <header class="support-assistant-header">
+            <div class="header-content">
+                <a href="support.html" class="back-link">← Back to Support</a>
+                <h1>Support Assistant</h1>
+                <p>Chat with our AI support assistant</p>
+            </div>
+        </header>
+
+        <main class="support-assistant-main">
+            <div class="flash-chat-container active" id="flashChatContainer">
+                <div class="flash-chat-header">
+                    <h3>Support here to help you</h3>
+                    <button class="flash-chat-close" id="flashChatClose" onclick="goBack()">×</button>
+                </div>
+                <div class="flash-chat-content">
+                    <iframe src="http://192.168.29.103:8502" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = 'support.html';
+        }
+    </script>
+</body>
+</html>
