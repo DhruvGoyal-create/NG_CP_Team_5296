@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .nav-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .nav-item h4 {
+            margin: 0 0 10px 0;
+            color: #007bff;
+        }
+        .nav-item a {
+            display: block;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .nav-item a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 Backend Connection Test</h1>
+        <p>Testing Django backend server connectivity and admin panel access</p>
+
+        <div class="nav-grid">
+            <div class="nav-item">
+                <h4>Admin Home</h4>
+                <a href="http://127.0.0.1:8000/" target="_blank">🏠 Admin Home</a>
+            </div>
+            <div class="nav-item">
+                <h4>Admin Panel</h4>
+                <a href="http://127.0.0.1:8000/admin/" target="_blank">🔧 Admin Panel</a>
+            </div>
+            <div class="nav-item">
+                <h4>API Documentation</h4>
+                <a href="http://127.0.0.1:8000/docs/" target="_blank">📚 API Docs</a>
+            </div>
+            <div class="nav-item">
+                <h4>API Root</h4>
+                <a href="http://127.0.0.1:8000/api/" target="_blank">🔌 API Root</a>
+            </div>
+            <div class="nav-item">
+                <h4>Frontend Login</h4>
+                <a href="../frontend/home/login/login.html" target="_blank">🔐 Frontend Login</a>
+            </div>
+        </div>
+
+        <div id="testResults" class="status info">
+            <strong>🔄 Testing backend connections...</strong><br>
+            Please wait while we check all endpoints...
+        </div>
+
+        <div style="margin-top: 30px;">
+            <button onclick="testAllConnections()">🧪 Test All Connections</button>
+            <button onclick="testAdminLogin()">🔐 Test Admin Login</button>
+            <button onclick="openAdminSystemTest()">📋 Open Admin System Test</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000';
+
+        function showResult(message, type = 'info') {
+            const element = document.getElementById('testResults');
+            if (element) {
+                element.className = `status ${type}`;
+                element.innerHTML = message;
+            }
+        }
+
+        async function testAllConnections() {
+            showResult('🔄 Testing all backend connections...', 'info');
+            
+            const results = [];
+            
+            // Test admin home
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                if (response.ok) {
+                    results.push('✅ Admin Home accessible');
+                } else {
+                    results.push('❌ Admin Home not accessible');
+                }
+            } catch (error) {
+                results.push(`❌ Admin Home error: ${error.message}`);
+            }
+            
+            // Test admin panel
+            try {
+                const response = await fetch(`${API_BASE}/admin/`);
+                if (response.ok) {
+                    results.push('✅ Admin Panel accessible');
+                } else {
+                    results.push('❌ Admin Panel not accessible');
+                }
+            } catch (error) {
+                results.push(`❌ Admin Panel error: ${error.message}`);
+            }
+            
+            // Test API documentation
+            try {
+                const response = await fetch(`${API_BASE}/docs/`);
+                if (response.ok) {
+                    results.push('✅ API Documentation accessible');
+                } else {
+                    results.push('❌ API Documentation not accessible');
+                }
+            } catch (error) {
+                results.push(`❌ API Documentation error: ${error.message}`);
+            }
+            
+            // Test API root
+            try {
+                const response = await fetch(`${API_BASE}/api/`);
+                if (response.ok) {
+                    results.push('✅ API Root accessible');
+                } else {
+                    results.push('❌ API Root not accessible');
+                }
+            } catch (error) {
+                results.push(`❌ API Root error: ${error.message}`);
+            }
+            
+            showResult(`🎯 Backend Connection Test Results:<br><br>${results.join('<br>')}`, 
+                      results.every(r => r.includes('✅')) ? 'success' : 'error');
+        }
+
+        async function testAdminLogin() {
+            showResult('🔐 Testing admin login...', 'info');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/auth/login/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password: 'admin123'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(`✅ Admin Login API Working!<br>
+                        Status: ${response.status}<br>
+                        Token: ${data.token ? data.token.substring(0, 20) + '...' : 'None'}<br>
+                        User: ${data.user.username}<br>
+                        Is Admin: ${data.user.is_staff}<br>
+                        <strong>🎯 Use these credentials to login to admin panel:</strong><br>
+                        Username: admin<br>
+                        Password: admin123`, 'success');
+                } else {
+                    showResult(`❌ Admin Login API Failed!<br>
+                        Status: ${response.status}<br>
+                        Error: ${data.detail || data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+
+        function openAdminSystemTest() {
+            window.open('admin-system-test.html', '_blank');
+        }
+
+        // Auto-test on page load
+        window.addEventListener('load', testAllConnections);
+    </script>
+</body>
+</html>

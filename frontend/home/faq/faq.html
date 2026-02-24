@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Smart Spend</title>
+    <link rel="stylesheet" href="faq.css">
+</head>
+<body>
+    <div class="faq-container">
+        <header class="faq-header">
+            <div class="header-content">
+                <a href="../main/home.html" class="back-link">← Back to Home</a>
+                <h1>Frequently Asked Questions</h1>
+                <p>Find answers to common questions about Smart Spend</p>
+            </div>
+        </header>
+
+        <main class="faq-main">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search FAQs..." onkeyup="searchFAQs()">
+                <button onclick="searchFAQs()">🔍</button>
+            </div>
+
+            <div class="faq-categories">
+                <button class="category-btn active" onclick="filterCategory('all')">All</button>
+                <button class="category-btn" onclick="filterCategory('account')">Account</button>
+                <button class="category-btn" onclick="filterCategory('security')">Security</button>
+                <button class="category-btn" onclick="filterCategory('features')">Features</button>
+                <button class="category-btn" onclick="filterCategory('billing')">Billing</button>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item" data-category="account">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>How do I create a Smart Spend account?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To create a Smart Spend account:</p>
+                        <ol>
+                            <li>Click on the "Sign Up" button on the home page</li>
+                            <li>Fill in your personal information (name, email, phone)</li>
+                            <li>Create a strong password following our security guidelines</li>
+                            <li>Verify your email address</li>
+                            <li>Complete your profile setup</li>
+                        </ol>
+                        <p>The entire process takes less than 5 minutes!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="security">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>How secure is my financial data?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Your financial data is protected with:</p>
+                        <ul>
+                            <li>256-bit encryption for all data transmission</li>
+                            <li>Two-factor authentication (2FA)</li>
+                            <li>Real-time fraud detection systems</li>
+                            <li>Secure login with biometrics</li>
+                            <li>24/7 transaction monitoring</li>
+                            <li>Compliance with PCI DSS standards</li>
+                        </ul>
+                        <p>We never share your data with third parties without your explicit consent.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="features">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>What features does Smart Spend offer?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Smart Spend offers comprehensive financial management features:</p>
+                        <ul>
+                            <li><strong>Secure Banking:</strong> Bank-level security for all transactions</li>
+                            <li><strong>Easy to Use:</strong> Simple interface designed for beginners</li>
+                            <li><strong>Learn & Grow:</strong> Step-by-step financial guidance</li>
+                            <li><strong>24/7 Support:</strong> Always available customer service</li>
+                            <li><strong>Goal Oriented:</strong> Help achieve financial goals</li>
+                            <li><strong>Track Progress:</strong> Monitor your financial journey</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="account">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>How do I reset my password?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To reset your password:</p>
+                        <ol>
+                            <li>Go to the login page</li>
+                            <li>Click on "Forgot Password?"</li>
+                            <li>Enter your registered email address</li>
+                            <li>Check your email for reset instructions</li>
+                            <li>Click the reset link in the email</li>
+                            <li>Create a new strong password</li>
+                            <li>Log in with your new password</li>
+                        </ol>
+                        <p>Password reset links expire after 24 hours for security reasons.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="billing">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Is Smart Spend really free?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Smart Spend offers both free and premium features:</p>
+                        <ul>
+                            <li><strong>Free Plan:</strong> Basic tracking, budget alerts, and email support</li>
+                            <li><strong>Premium Plan:</strong> Advanced analytics, investment tracking, priority support, and more</li>
+                        </ul>
+                        <p>The free plan includes all essential features for personal finance management. Premium plans start at $9.99/month.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="features">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Can I connect multiple bank accounts?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Smart Spend supports:</p>
+                        <ul>
+                            <li>Unlimited bank account connections</li>
+                            <li>Credit card integration</li>
+                            <li>Investment account tracking</li>
+                            <li>Loan account monitoring</li>
+                            <li>Cryptocurrency wallet connections</li>
+                        </ul>
+                        <p>All connections use secure APIs and are encrypted end-to-end.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="security">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>What should I do if I suspect fraud?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>If you suspect fraudulent activity:</p>
+                        <ol>
+                            <li>Immediately log into your Smart Spend account</li>
+                            <li>Review recent transactions for unauthorized charges</li>
+                            <li>Use the "Report Fraud" feature in the app</li>
+                            <li>Contact our 24/7 support team immediately</li>
+                            <li>Consider freezing your accounts temporarily</li>
+                            <li>Change your password and enable 2FA</li>
+                        </ol>
+                        <p>We'll work with you to resolve any issues and secure your accounts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="help-section">
+                <h2>Still need help?</h2>
+                <p>Can't find what you're looking for? Our support team is here to help!</p>
+                <div class="help-actions">
+                    <a href="../support/support.html" class="help-btn primary">Contact Support</a>
+                    <a href="../user-guide/user-guide.html" class="help-btn secondary">Read User Guide</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="faq.js"></script>
+</body>
+</html>

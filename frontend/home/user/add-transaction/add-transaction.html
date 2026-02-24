@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Spend - Add Transaction</title>
+    <link rel="stylesheet" href="add-transaction.css">
+    <script src="../dashboard-auth.js"></script>
+    <script src="../data-manager.js"></script>
+    <script src="add-transaction-main.js"></script>
+</head>
+<body>
+    <!-- Fixed Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../../../main/unnamed.jpg" alt="Smart Spend Logo" class="logo">
+                <h1>Smart Spend - Add Transaction</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../dashboard/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="#" class="nav-link active">Add Transaction</a></li>
+                <li><a href="../all-transactions/all-transactions.html" class="nav-link">Transactions</a></li>
+                <li><a href="../analytics/analytics.html" class="nav-link">Analytics</a></li>
+                <li><a href="../ur-assistant/ur-assistant.html" class="nav-link">Assistant</a></li>
+                <li><a href="../settings/settings.html" class="nav-link">Settings</a></li>
+                <li><a href="#" onclick="logout()" class="nav-link logout-btn">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Add New Transaction</h1>
+                <p class="page-subtitle">Record your income or expense</p>
+            </div>
+
+            <div class="transaction-form-container">
+                <form class="transaction-form" id="transactionForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="transactionType">Transaction Type</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="transactionType" value="expense" checked>
+                                    <span class="radio-custom"></span>
+                                    <span class="radio-label">💸 Expense</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="transactionType" value="income">
+                                    <span class="radio-custom"></span>
+                                    <span class="radio-label">💵 Income</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="amount">Amount (₹)</label>
+                            <input type="number" id="amount" name="amount" placeholder="0.00" step="0.01" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category" required>
+                                <option value="">Select Category</option>
+                                <optgroup label="Expense Categories">
+                                    <option value="food">🍔 Food & Dining</option>
+                                    <option value="transport">🚗 Transportation</option>
+                                    <option value="shopping">🛍️ Shopping</option>
+                                    <option value="utilities">⚡ Utilities</option>
+                                    <option value="entertainment">🎬 Entertainment</option>
+                                    <option value="health">🏥 Healthcare</option>
+                                    <option value="education">📚 Education</option>
+                                    <option value="other">📦 Other</option>
+                                </optgroup>
+                                <optgroup label="Income Categories">
+                                    <option value="salary">💼 Salary</option>
+                                    <option value="freelance">💻 Freelance</option>
+                                    <option value="investment">📈 Investment</option>
+                                    <option value="business">🏢 Business</option>
+                                    <option value="other-income">💰 Other Income</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" name="description" placeholder="What was this transaction for?" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" required max="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method</label>
+                            <select id="paymentMethod" name="paymentMethod">
+                                <option value="cash">💵 Cash</option>
+                                <option value="debit">💳 Debit Card</option>
+                                <option value="credit">💳 Credit Card</option>
+                                <option value="upi">📱 UPI</option>
+                                <option value="netbanking">🌐 Net Banking</option>
+                                <option value="other">🔄 Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="notes">Notes (Optional)</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Add any additional notes..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Clear</button>
+                        <button type="submit" class="btn btn-primary">Add Transaction</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Recent Transactions Preview -->
+            <div class="recent-preview">
+                <h3>Recent Transactions</h3>
+                <div id="recentTransactionsList">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+</html>

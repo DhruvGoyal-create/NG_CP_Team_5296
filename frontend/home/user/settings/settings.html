@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Spend - Settings</title>
+    <link rel="stylesheet" href="settings.css">
+    <script src="../dashboard-auth.js"></script>
+    <script src="../data-manager.js"></script>
+    <script src="../ui-utils.js"></script>
+    <script>checkAuth();</script>
+</head>
+<body>
+    <!-- Fixed Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../../../main/unnamed.jpg" alt="Smart Spend Logo" class="logo">
+                <h1>Smart Spend - Settings</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../dashboard/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="../add-transaction/add-transaction.html" class="nav-link">Add Transaction</a></li>
+                <li><a href="../all-transactions/all-transactions.html" class="nav-link">Transactions</a></li>
+                <li><a href="../analytics/analytics.html" class="nav-link">Analytics</a></li>
+                <li><a href="../ur-assistant/ur-assistant.html" class="nav-link">Assistant</a></li>
+                <li><a href="#" class="nav-link active">Settings</a></li>
+                <li><a href="#" onclick="logout()" class="nav-link logout-btn">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Manage your account preferences and application settings</p>
+            </div>
+
+            <div class="settings-layout">
+                <!-- Settings Sidebar -->
+                <aside class="settings-sidebar">
+                    <nav class="settings-nav">
+                        <ul class="settings-menu">
+                            <li><a href="#profile" class="settings-link active" data-section="profile">👤 Profile</a></li>
+                            <li><a href="#account" class="settings-link" data-section="account">🔐 Account</a></li>
+                            <li><a href="#preferences" class="settings-link" data-section="preferences">⚙️ Preferences</a></li>
+                            <li><a href="#notifications" class="settings-link" data-section="notifications">🔔 Notifications</a></li>
+                            <li><a href="#privacy" class="settings-link" data-section="privacy">🔒 Privacy</a></li>
+                            <li><a href="#budget" class="settings-link" data-section="budget">💰 Budget</a></li>
+                            <li><a href="#export" class="settings-link" data-section="export">📥 Export Data</a></li>
+                            <li><a href="#about" class="settings-link" data-section="about">ℹ️ About</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Settings Content -->
+                <main class="settings-content">
+                    <!-- Profile Section -->
+                    <section class="settings-section active" id="profile-section">
+                        <h2>Profile Settings</h2>
+                        
+                        <div class="profile-card">
+                            <div class="profile-avatar-section">
+                                <div class="avatar-container">
+                                    <img src="https://picsum.photos/seed/user-avatar/150/150.jpg" alt="Profile Avatar" class="profile-avatar">
+                                    <button class="avatar-change-btn">📷 Change</button>
+                                </div>
+                                <div class="profile-info">
+                                    <h3>John Doe</h3>
+                                    <p>john.doe@example.com</p>
+                                    <p class="member-since">Member since January 2024</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" value="John Doe" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" value="john.doe@example.com" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" value="+91 98765 43210" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" rows="3" class="form-input">Passionate about managing finances and achieving financial goals.</textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn btn-primary">Save Changes</button>
+                                <button class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Account Section -->
+                    <section class="settings-section" id="account-section">
+                        <h2>Account Settings</h2>
+                        
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" value="johndoe" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" class="form-input">
+                            </div>
+                            
+                            <div class="password-strength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill"></div>
+                                </div>
+                                <span class="strength-text">Password strength</span>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn btn-primary">Update Password</button>
+                                <button class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </div>
+
+                        <div class="danger-zone">
+                            <h3>Danger Zone</h3>
+                            <p>Irreversible actions for your account</p>
+                            <button class="btn btn-danger">Delete Account</button>
+                        </div>
+                    </section>
+
+                    <!-- Preferences Section -->
+                    <section class="settings-section" id="preferences-section">
+                        <h2>Preferences</h2>
+                        
+                        <div class="preferences-grid">
+                            <div class="preference-card">
+                                <h3>🌍 Language</h3>
+                                <select class="form-select">
+                                    <option value="en" selected>English</option>
+                                    <option value="hi">हिन्दी</option>
+                                    <option value="gu">ગુજરાતી</option>
+                                </select>
+                            </div>
+                            
+                            <div class="preference-card">
+                                <h3> currency</h3>
+                                <select class="form-select">
+                                    <option value="inr" selected>Indian Rupee (₹)</option>
+                                    <option value="usd">US Dollar ($)</option>
+                                    <option value="eur">Euro (€)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="preference-card">
+                                <h3>📅 Date Format</h3>
+                                <select class="form-select">
+                                    <option value="dd-mm-yyyy" selected>DD-MM-YYYY</option>
+                                    <option value="mm-dd-yyyy">MM-DD-YYYY</option>
+                                    <option value="yyyy-mm-dd">YYYY-MM-DD</option>
+                                </select>
+                            </div>
+                            
+                            <div class="preference-card">
+                                <h3>🎨 Theme</h3>
+                                <div class="theme-options">
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="light" checked>
+                                        <span class="theme-preview light"></span>
+                                        <span>Light</span>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="dark">
+                                        <span class="theme-preview dark"></span>
+                                        <span>Dark</span>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="auto">
+                                        <span class="theme-preview auto"></span>
+                                        <span>Auto</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Notifications Section -->
+                    <section class="settings-section" id="notifications-section">
+                        <h2>Notification Settings</h2>
+                        
+                        <div class="notification-settings">
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h3>💰 Budget Alerts</h3>
+                                    <p>Get notified when you're close to your budget limit</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h3>📊 Weekly Reports</h3>
+                                    <p>Receive weekly spending summaries</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h3>🎯 Goal Reminders</h3>
+                                    <p>Reminders for your financial goals</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h3>💳 Transaction Alerts</h3>
+                                    <p>Instant notifications for new transactions</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h3>📱 Email Notifications</h3>
+                                    <p>Receive important updates via email</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Privacy Section -->
+                    <section class="settings-section" id="privacy-section">
+                        <h2>Privacy Settings</h2>
+                        
+                        <div class="privacy-settings">
+                            <div class="privacy-item">
+                                <div class="privacy-info">
+                                    <h3>🔐 Two-Factor Authentication</h3>
+                                    <p>Add an extra layer of security to your account</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="privacy-item">
+                                <div class="privacy-info">
+                                    <h3>📍 Location Services</h3>
+                                    <p>Allow app to access your location for better insights</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="privacy-item">
+                                <div class="privacy-info">
+                                    <h3>📊 Data Analytics</h3>
+                                    <p>Help us improve by sharing anonymous usage data</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="privacy-item">
+                                <div class="privacy-info">
+                                    <h3>🔍 Search History</h3>
+                                    <p>Save your search queries for quick access</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Budget Section -->
+                    <section class="settings-section" id="budget-section">
+                        <h2>Budget Settings</h2>
+                        
+                        <div class="budget-settings">
+                            <div class="budget-overview">
+                                <h3>Monthly Budget</h3>
+                                <div class="budget-input-group">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" value="50000" class="budget-input">
+                                </div>
+                            </div>
+                            
+                            <div class="category-budgets">
+                                <h3>Category Budgets</h3>
+                                <div class="category-budget-item">
+                                    <label>🍔 Food & Dining</label>
+                                    <div class="budget-input-group">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" value="15000" class="budget-input">
+                                    </div>
+                                </div>
+                                
+                                <div class="category-budget-item">
+                                    <label>🚗 Transportation</label>
+                                    <div class="budget-input-group">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" value="8000" class="budget-input">
+                                    </div>
+                                </div>
+                                
+                                <div class="category-budget-item">
+                                    <label>🛍️ Shopping</label>
+                                    <div class="budget-input-group">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" value="10000" class="budget-input">
+                                    </div>
+                                </div>
+                                
+                                <div class="category-budget-item">
+                                    <label>🎬 Entertainment</label>
+                                    <div class="budget-input-group">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" value="5000" class="budget-input">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn btn-primary">Save Budget Settings</button>
+                                <button class="btn btn-secondary">Reset to Default</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Export Section -->
+                    <section class="settings-section" id="export-section">
+                        <h2>Export Data</h2>
+                        
+                        <div class="export-options">
+                            <div class="export-card">
+                                <h3>📊 Transaction History</h3>
+                                <p>Export all your transactions in various formats</p>
+                                <div class="export-formats">
+                                    <button class="btn btn-secondary">📄 CSV</button>
+                                    <button class="btn btn-secondary">📑 Excel</button>
+                                    <button class="btn btn-secondary">📄 PDF</button>
+                                </div>
+                            </div>
+                            
+                            <div class="export-card">
+                                <h3>📈 Analytics Reports</h3>
+                                <p>Download detailed analytics and reports</p>
+                                <div class="export-formats">
+                                    <button class="btn btn-secondary">📊 PDF Report</button>
+                                    <button class="btn btn-secondary">📑 Excel Workbook</button>
+                                </div>
+                            </div>
+                            
+                            <div class="export-card">
+                                <h3>🗂️ Complete Backup</h3>
+                                <p>Download all your data as a complete backup</p>
+                                <div class="export-formats">
+                                    <button class="btn btn-primary">📦 Download Backup</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- About Section -->
+                    <section class="settings-section" id="about-section">
+                        <h2>About</h2>
+                        
+                        <div class="about-content">
+                            <div class="app-info">
+                                <img src="../../../main/unnamed.jpg" alt="Smart Spend Logo" class="app-logo">
+                                <h3>Smart Spend Tracking System</h3>
+                                <p>Version 1.0.0</p>
+                                <p class="app-description">Your personal finance companion for tracking expenses, managing budgets, and achieving financial goals.</p>
+                            </div>
+                            
+                            <div class="features-list">
+                                <h3>Key Features</h3>
+                                <ul>
+                                    <li>💰 Expense tracking and categorization</li>
+                                    <li>📊 Advanced analytics and insights</li>
+                                    <li>🎯 Budget management and alerts</li>
+                                    <li>📱 Mobile-friendly interface</li>
+                                    <li>🔒 Secure data protection</li>
+                                    <li>🤥 AI-powered financial assistant</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="support-info">
+                                <h3>Support & Feedback</h3>
+                                <p>📧 support@smartspend.com</p>
+                                <p>🌐 www.smartspend.com</p>
+                                <p>📱 +91 98765 43210</p>
+                                <div class="social-links">
+                                    <a href="#" class="social-link">📘 Facebook</a>
+                                    <a href="#" class="social-link">🐦 Twitter</a>
+                                    <a href="#" class="social-link">📷 Instagram</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="../dashboard-auth.js"></script>
+    <script src="../data-manager.js"></script>
+    <script src="../ui-utils.js"></script>
+    <script src="settings-main.js"></script>
+</body>
+</html>

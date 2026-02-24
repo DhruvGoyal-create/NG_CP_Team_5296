@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Spend - User Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="../dashboard-auth.js"></script>
+    <script>
+        // Set login time for session management
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication on page load
+            checkAuth();
+            setLoginTime();
+            initializeDashboard();
+        });
+    </script>
+</head>
+<body>
+    <!-- Fixed Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../../../main/unnamed.jpg" alt="Smart Spend Logo" class="logo">
+                <h1>Smart Spend Dashboard</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active">Dashboard</a></li>
+                <li><a href="../add-transaction/add-transaction.html" class="nav-link">Add Transaction</a></li>
+                <li><a href="../all-transactions/all-transactions.html" class="nav-link">Transactions</a></li>
+                <li><a href="../analytics/analytics.html" class="nav-link">Analytics</a></li>
+                <li><a href="../ur-assistant/ur-assistant.html" class="nav-link">Assistant</a></li>
+                <li><a href="../settings/settings.html" class="nav-link">Settings</a></li>
+                <li><a href="#" onclick="logout()" class="nav-link logout-btn">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>Dashboard Menu</h3>
+                <button class="close-sidebar" id="closeSidebar">×</button>
+            </div>
+            
+            <!-- User Profile Section -->
+            <div class="user-profile">
+                <div class="profile-avatar">
+                    <img src="https://picsum.photos/seed/user-avatar/100/100.jpg" alt="User Avatar" id="userAvatar">
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">User Name</h3>
+                    <p id="userEmail">user@example.com</p>
+                </div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li><a href="#" class="sidebar-link active">📊 Dashboard</a></li>
+                <li><a href="../add-transaction/add-transaction.html" class="sidebar-link">➕ Add Transaction</a></li>
+                <li><a href="../all-transactions/all-transactions.html" class="sidebar-link">📋 All Transactions</a></li>
+                <li><a href="../analytics/analytics.html" class="sidebar-link">📈 Analytics</a></li>
+                <li><a href="../ur-assistant/ur-assistant.html" class="sidebar-link">🤖 U.R. Assistant</a></li>
+                <li><a href="../settings/settings.html" class="sidebar-link">⚙️ Settings</a></li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <a href="../../../landing/start/landing.html" class="back-to-landing">← Back to Landing</a>
+                <button class="logout-btn" onclick="logout()">
+                    <span class="logout-icon">🚪</span>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page-content active">
+                <div class="page-header">
+                    <h1 class="page-title">Dashboard</h1>
+                    <p class="page-subtitle">Overview of your financial activity</p>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="summary-cards">
+                    <div class="summary-card expense-card">
+                        <div class="card-icon expense-icon">💰</div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <h3 class="card-title">Total Expenses</h3>
+                                <span class="card-trend negative">▲ 12%</span>
+                            </div>
+                            <p class="card-value" id="total-expenses">₹0.00</p>
+                            <p class="card-subtitle">From last month</p>
+                        </div>
+                    </div>
+                    <div class="summary-card monthly-card">
+                        <div class="card-icon monthly-icon">📅</div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <h3 class="card-title">This Month</h3>
+                                <span class="card-trend positive">▼ 8%</span>
+                            </div>
+                            <p class="card-value" id="monthly-expenses">₹0.00</p>
+                            <p class="card-subtitle">vs previous month</p>
+                        </div>
+                    </div>
+                    <div class="summary-card transaction-card">
+                        <div class="card-icon transaction-icon">📊</div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <h3 class="card-title">Transactions</h3>
+                                <span class="card-trend positive">▲ 5%</span>
+                            </div>
+                            <p class="card-value" id="transaction-count">0</p>
+                            <p class="card-subtitle">Total activities</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container category-chart">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Category Distribution</h3>
+                            <div class="chart-options">
+                                <button class="chart-option active">This Month</button>
+                                <button class="chart-option">This Year</button>
+                            </div>
+                        </div>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="chart-container trend-chart">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Monthly Trend</h3>
+                            <div class="chart-options">
+                                <button class="chart-option active">6 Months</button>
+                                <button class="chart-option">1 Year</button>
+                            </div>
+                        </div>
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="recent-transactions">
+                    <div class="section-header">
+                        <h3 class="section-title">Recent Transactions</h3>
+                        <a href="../all-transactions/all-transactions.html" class="view-all-btn">View All →</a>
+                    </div>
+                    <div id="recent-transactions-list">
+                        <!-- Transactions will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Dashboard JavaScript Files -->
+    <script>
+        // Initialize dashboard
+        function initializeDashboard() {
+            console.log('Dashboard initialized');
+            
+            // Load user data
+            const userData = getUserData();
+            if (userData) {
+                document.getElementById('userName').textContent = `${userData.firstName} ${userData.lastName}`;
+                document.getElementById('userEmail').textContent = userData.email;
+            }
+            
+            // Load transaction data
+            loadTransactionData();
+        }
+        
+        // Load transaction data
+        function loadTransactionData() {
+            const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+            
+            // Update transaction count
+            document.getElementById('transaction-count').textContent = transactions.length;
+            
+            // Calculate total expenses
+            const totalExpenses = transactions.reduce((sum, t) => sum + (t.amount || 0), 0);
+            document.getElementById('total-expenses').textContent = `₹${totalExpenses.toFixed(2)}`;
+            
+            // Calculate this month's expenses
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            const monthlyExpenses = transactions
+                .filter(t => {
+                    const date = new Date(t.date);
+                    return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+                })
+                .reduce((sum, t) => sum + (t.amount || 0), 0);
+            document.getElementById('monthly-expenses').textContent = `₹${monthlyExpenses.toFixed(2)}`;
+            
+            // Show recent transactions
+            const recentTransactions = transactions.slice(-5).reverse();
+            const recentList = document.getElementById('recent-transactions-list');
+            
+            if (recentTransactions.length === 0) {
+                recentList.innerHTML = '<p>No transactions yet. Start by adding your first transaction!</p>';
+            } else {
+                recentList.innerHTML = recentTransactions.map(t => `
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>${t.description || 'Transaction'}</h4>
+                            <p>${t.category || 'General'} • ${new Date(t.date).toLocaleDateString()}</p>
+                        </div>
+                        <div class="transaction-amount">₹${(t.amount || 0).toFixed(2)}</div>
+                    </div>
+                `).join('');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .success { color: green; }
+        .error { color: red; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Admin Portal Access Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Direct Admin Access (Should be blocked)</h2>
+        <button onclick="testDirectAccess()">Test Direct Admin Access</button>
+        <div id="directResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: Admin Login Flow (Should work)</h2>
+        <button onclick="testAdminLogin()">Test Admin Login Flow</button>
+        <div id="loginResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Instructions:</h2>
+        <ol>
+            <li>First, try direct admin access - this should redirect you to login</li>
+            <li>Then, go to <a href="frontend/home/login/login.html">login.html</a> and login with admin@example.com / Admin@123</li>
+            <li>After successful login, you should be redirected to the admin panel</li>
+        </ol>
+        
+        <p><strong>Admin Credentials:</strong></p>
+        <ul>
+            <li>Username: admin@example.com</li>
+            <li>Password: Admin@123</li>
+        </ul>
+    </div>
+
+    <script>
+        async function testDirectAccess() {
+            const resultDiv = document.getElementById('directResult');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('http://127.0.0.1:8000/admin/', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                if (response.redirected) {
+                    resultDiv.innerHTML = `<span class="success">✅ SUCCESS: Admin access properly redirected to login (${response.url})</span>`;
+                } else if (response.status === 403) {
+                    resultDiv.innerHTML = `<span class="success">✅ SUCCESS: Admin access properly blocked (403 Forbidden)</span>`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">❌ ISSUE: Admin access not properly blocked (Status: ${response.status})</span>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">❌ ERROR: ${error.message}</span>`;
+            }
+        }
+        
+        async function testAdminLogin() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = 'Testing admin login flow...';
+            
+            try {
+                // Step 1: Test admin login API
+                const loginResponse = await fetch('http://127.0.0.1:8000/api/admin-login/', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        username: 'admin@example.com',
+                        password: 'Admin@123' 
+                    })
+                });
+                
+                if (loginResponse.ok) {
+                    const loginData = await loginResponse.json();
+                    resultDiv.innerHTML += `<br>✅ Admin login successful: ${loginData.message}`;
+                    
+                    // Step 2: Set admin session
+                    const sessionResponse = await fetch('http://127.0.0.1:8000/api/set-admin-session/', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ admin_flag: true })
+                    });
+                    
+                    if (sessionResponse.ok) {
+                        const sessionData = await sessionResponse.json();
+                        resultDiv.innerHTML += `<br>✅ Admin session set: ${sessionData.message}`;
+                        resultDiv.innerHTML += `<br><br><span class="success">🎉 SUCCESS: Admin login flow completed! You can now access the admin panel.</span>`;
+                        resultDiv.innerHTML += `<br><a href="http://127.0.0.1:8000/admin/" target="_blank">Go to Admin Panel</a>`;
+                    } else {
+                        resultDiv.innerHTML += `<br><span class="error">❌ Failed to set admin session</span>`;
+                    }
+                } else {
+                    resultDiv.innerHTML = `<br><span class="error">❌ Admin login failed</span>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<br><span class="error">❌ ERROR: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>

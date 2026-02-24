@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Spend - All Transactions</title>
+    <link rel="stylesheet" href="all-transactions.css">
+    <script src="../dashboard-auth.js"></script>
+    <script src="../data-manager.js"></script>
+    <script src="../ui-utils.js"></script>
+    <script>checkAuth();</script>
+</head>
+<body>
+    <!-- Fixed Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../../../main/unnamed.jpg" alt="Smart Spend Logo" class="logo">
+                <h1>Smart Spend - All Transactions</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../dashboard/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="../add-transaction/add-transaction.html" class="nav-link">Add Transaction</a></li>
+                <li><a href="#" class="nav-link active">Transactions</a></li>
+                <li><a href="../analytics/analytics.html" class="nav-link">Analytics</a></li>
+                <li><a href="../ur-assistant/ur-assistant.html" class="nav-link">Assistant</a></li>
+                <li><a href="../settings/settings.html" class="nav-link">Settings</a></li>
+                <li><a href="#" onclick="logout()" class="nav-link logout-btn">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">All Transactions</h1>
+                <p class="page-subtitle">View and manage your complete transaction history</p>
+            </div>
+
+            <!-- Filters and Search -->
+            <div class="filters-section">
+                <div class="filters-container">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search transactions...">
+                        <button class="search-btn">🔍</button>
+                    </div>
+                    
+                    <div class="filter-controls">
+                        <select id="typeFilter" class="filter-select">
+                            <option value="">All Types</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                        
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="food">Food & Dining</option>
+                            <option value="transport">Transportation</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="health">Healthcare</option>
+                            <option value="education">Education</option>
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="investment">Investment</option>
+                            <option value="other">Other</option>
+                        </select>
+                        
+                        <input type="date" id="dateFilter" class="filter-date">
+                        
+                        <button class="btn btn-primary" onclick="addNewTransaction()">+ Add Transaction</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="summary-card income-card">
+                    <div class="card-icon">💵</div>
+                    <div class="card-content">
+                        <h3>Total Income</h3>
+                        <p class="card-value" id="totalIncome">₹0.00</p>
+                    </div>
+                </div>
+                <div class="summary-card expense-card">
+                    <div class="card-icon">💸</div>
+                    <div class="card-content">
+                        <h3>Total Expenses</h3>
+                        <p class="card-value" id="totalExpenses">₹0.00</p>
+                    </div>
+                </div>
+                <div class="summary-card balance-card">
+                    <div class="card-icon">💰</div>
+                    <div class="card-content">
+                        <h3>Net Balance</h3>
+                        <p class="card-value" id="netBalance">₹0.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions Table -->
+            <div class="transactions-table-container">
+                <div class="table-header">
+                    <h3>Transaction History</h3>
+                    <div class="table-actions">
+                        <button class="btn btn-secondary" onclick="exportTransactions()">📥 Export</button>
+                        <button class="btn btn-secondary" onclick="printTransactions()">🖨️ Print</button>
+                    </div>
+                </div>
+                
+                <div class="table-wrapper">
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Payment Method</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody">
+                            <!-- Transactions will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination">
+                    <button class="pagination-btn" onclick="previousPage()">← Previous</button>
+                    <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+                    <button class="pagination-btn" onclick="nextPage()">Next →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Transaction</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="editDescription">Description</label>
+                    <input type="text" id="editDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="editAmount">Amount</label>
+                    <input type="number" id="editAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCategory">Category</label>
+                    <select id="editCategory" required>
+                        <option value="food">Food & Dining</option>
+                        <option value="transport">Transportation</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="health">Healthcare</option>
+                        <option value="education">Education</option>
+                        <option value="salary">Salary</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="investment">Investment</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editDate">Date</label>
+                    <input type="date" id="editDate" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveEditBtn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../dashboard-auth.js"></script>
+    <script src="data-manager.js"></script>
+    <script src="all-transactions-main.js"></script>
+        </body>
+</html>

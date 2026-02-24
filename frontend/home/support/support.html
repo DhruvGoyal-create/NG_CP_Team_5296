@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Support - Smart Spend</title>
+    <link rel="stylesheet" href="support-main.css">
+</head>
+<body>
+    <div class="support-container">
+        <header class="support-header">
+            <div class="header-content">
+                <a href="../main/home.html" class="back-link">← Back to Home</a>
+                <h1>24/7 Live Support</h1>
+                <p>We're here to help you anytime, anywhere</p>
+            </div>
+        </header>
+
+        <main class="support-main">
+            <div class="support">
+                <div class="support-card">
+                    <div class="support-icon">💬</div>
+                    <h3>Live Support Chat</h3>
+                    <p>Chat with our support team instantly</p>
+                    <button class="support-btn" onclick="startChat()">Start Chat</button>
+                </div>
+
+                <div class="support-card">
+                    <div class="support-icon">📧</div>
+                    <h3>Email Support</h3>
+                    <p>Get detailed help via email</p>
+                    <button class="support-btn" onclick="openEmailForm()">Send Email</button>
+                </div>
+            </div>
+
+            <div class="support-status">
+                <h2>Current Support Status</h2>
+                <div class="status-indicator online">
+                    <span class="status-dot"></span>
+                    <span>All systems operational</span>
+                </div>
+                <div class="status-info">
+                    <p>Average response time: <strong>1 hour to 30 minutes</strong></p>
+                    <p>Available agents: <strong>12 online</strong></p>
+                </div>
+            </div>
+
+            <div class="support-hours">
+                <h2>Support Hours</h2>
+                <div class="hours-grid">
+                    <div class="hours-item">
+                        <span class="day">Monday - Friday</span>
+                        <span class="time">24/7</span>
+                    </div>
+                    <div class="hours-item">
+                        <span class="day">Saturday</span>
+                        <span class="time">24/7</span>
+                    </div>
+                    <div class="hours-item">
+                        <span class="day">Sunday</span>
+                        <span class="time">24/7</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="support.js"></script>
+</body>
+</html>
